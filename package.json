@@ -1,0 +1,27 @@
+{
+  "name": "dx-template",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "description": "DX Template project",
+  "scripts": {
+    "sfci:init": "sf ci org create -a ${npm_config_alias} && npm run sfci:init:postcreate && npm run data:import --target=${npm_config_alias}",
+    "sfci:init:win": "sf ci org create -a %npm_config_alias% && npm run sfci:init:postcreate && npm run data:import --target=%npm_config_alias%",
+    "sfci:init:postcreate": "sf ci org printurl && sf ci source push && sf ci user assign permsetgroup",
+    "data:import": "sf sfdmu run --path data --sourceusername csvfile --targetusername ${npm_config_target}",
+    "data:import:win": "sf sfdmu run --path data --sourceusername csvfile --targetusername %npm_config_target%",
+    "data:export": "sf sfdmu run --path data --sourceusername ${npm_config_source} --targetusername csvfile",
+    "data:export:win": "sf sfdmu run --path data --sourceusername %npm_config_source% --targetusername csvfile",
+    "lint": "npm run lint:lwc && npm run lint:aura",
+    "lint:lwc": "eslint src/**/lwc/** --no-error-on-unmatched-pattern",
+    "lint:aura": "eslint src/**/aura/** --no-error-on-unmatched-pattern",
+    "gen-record-types": "salesforce-source-gen record-types"
+  },
+  "engines": {
+    "node": ">= 20.0.0"
+  },
+  "devDependencies": {
+    "eslint-config-sf-common": "latest",
+    "salesforce-source-gen": "latest"
+  }
+}
